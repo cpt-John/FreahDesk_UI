@@ -155,7 +155,96 @@
           role="tabpanel"
           aria-labelledby="nav-create-tab"
         >
-          Something
+          <form class="mx-5" onsubmit="create_ticket()">
+            <h1>Create Ticket</h1>
+            <div class="form-group">
+              <label for="email-create-ticket">Email Id</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email-create-ticket"
+                aria-describedby="emailHelp"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="subject-create">Subject</label>
+              <input
+                type="text"
+                class="form-control"
+                id="subject-create"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="priority-create" class="col col-form-label"
+                >Priority</label
+              >
+              <select class="custom-select mr-sm-2" id="priority-create">
+                <option value="1" selected>Low</option>
+                <option value="2">Medium</option>
+                <option value="3">High</option>
+                <option value="4">Urgent</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="status-create" class="col col-form-label"
+                >Status</label
+              >
+              <select class="custom-select mr-sm-2" id="status-create">
+                <option value="2" selected>Open</option>
+                <option value="3">Pending</option>
+                <option value="4">Resolved</option>
+                <option value="5">Closed</option>
+                <option value="6">Waiting for Customer</option>
+                <option value="7">Waiting for Third-party</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="details-create">Details</label>
+              <textarea
+                class="form-control"
+                id="details-create"
+                rows="3"
+                required
+              ></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+          <br />
+          <form class="mx-5" onsubmit="create_contact()">
+            <h1>Create New Contact</h1>
+            <div class="form-group">
+              <label for="name-create">Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="name-create"
+                aria-describedby="emailHelp"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="email-create-contact">Email Id</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email-create-contact"
+                aria-describedby="emailHelp"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="phone-create">Phone Number</label>
+              <input
+                type="text"
+                class="form-control"
+                id="phone-create"
+                aria-describedby="emailHelp"
+              />
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
         </div>
       </div>
     </div>

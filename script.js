@@ -245,3 +245,56 @@ async function delete_contact() {
 }
 
 view_contacts_list();
+
+async function create_ticket() {
+  let url = "https://johnspyboy.freshdesk.com/api/v2/tickets/";
+  let formData = new FormData();
+  let email = document.getElementById("email-create-ticket").value;
+  let subject = document.getElementById("subject-create").value;
+  let priority = document.getElementById("priority-create").value;
+  let status = document.getElementById("status-create").value;
+  let details = document.getElementById("details-create").value;
+  formData.append("email", email);
+  formData.append("subject", subject);
+  formData.append("description", details);
+  formData.append("status", status);
+  formData.append("priority", priority);
+  let data = await fetch(url, {
+    method: "POST",
+    headers,
+    body: formData,
+  }).catch((error) => {
+    console.error("Error:", error);
+  });
+  let parsedData = await data
+    .json()
+    .catch(() => console.error("error in parsing"));
+  alert("created");
+  console.log(parsedData);
+  view_ticket_list();
+}
+
+async function create_contact() {
+  let url = "https://johnspyboy.freshdesk.com/api/v2/contacts/";
+  let formData = new FormData();
+  let email = document.getElementById("email-create-contact").value;
+  let name = document.getElementById("name-create").value;
+  let phone = document.getElementById("phone-create").value;
+  phone = phone ? phone : "---";
+  formData.append("email", email);
+  formData.append("name", name);
+  formData.append("phone", phone);
+  let data = await fetch(url, {
+    method: "POST",
+    headers,
+    body: formData,
+  }).catch((error) => {
+    console.error("Error:", error);
+  });
+  let parsedData = await data
+    .json()
+    .catch(() => console.error("error in parsing"));
+  console.log(parsedData);
+  alert("created");
+  view_contacts_list();
+}
