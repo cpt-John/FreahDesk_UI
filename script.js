@@ -29,7 +29,6 @@ async function view_ticket_list() {
       )
     );
   });
-  tickets_loaded = true;
 }
 
 function create_ticket_card(
@@ -153,3 +152,96 @@ async function delete_ticket(ticketId) {
 }
 
 view_ticket_list();
+
+// contacts tab
+async function view_contacts_list() {
+  let url = "https://johnspyboy.freshdesk.com/api/v2/contacts";
+  let data = await fetch(url, {
+    method: "GET",
+    headers,
+  }).catch((error) => {
+    console.error("Error:", error);
+  });
+
+  let parsedData = await data
+    .json()
+    .catch(() => console.error("error in parsing"));
+  console.log(parsedData);
+  let ticketList = document.getElementById("contacts-list");
+  ticketList.innerHTML = "";
+  parsedData.forEach((e) => {
+    ticketList.appendChild(
+      create_contact_card(e["id"], e["name"], e["email"], e["phone"])
+    );
+  });
+}
+
+function create_contact_card(id, name, email, phone) {
+  phone = phone ? phone : "---";
+  let card = document.createElement("tr");
+  card.innerHTML = `<th scope="row">${id}</th>
+      <td id='name${id}'>${name}</td>
+      <td id='email${id}'>${email}</td>
+      <td id='phone${id}'>${phone}</td>
+      <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#update-contact" onclick="fill_contact_details(${id})">
+  Update Contact
+</button></td>`;
+  return card;
+}
+
+function fill_contact_details(Id) {
+  document.getElementById("contact-id").value = Id;
+  document.getElementById("update-name").value = document.getElementById(
+    "name" + Id
+  ).innerText;
+  document.getElementById("update-email").value = document.getElementById(
+    "email" + Id
+  ).innerText;
+  document.getElementById("update-phone").value = document.getElementById(
+    "phone" + Id
+  ).innerText;
+}
+
+async function update_contact() {
+  let Id = document.getElementById("contact-id").value;
+  let url = "https://johnspyboy.freshdesk.com/api/v2/contacts/" + Id;
+  let name = document.getElementById("update-name").value;
+  name = name ? name : document.getElementById("name" + Id).innerText;
+  let email = document.getElementById("update-email").value;
+  email = email ? email : document.getElementById("email" + Id).innerText;
+  let phone = document.getElementById("update-phone").value;
+  phone = phone ? phone : document.getElementById("phone" + Id).innerText;
+
+  let formData = new FormData();
+  formData.append("name", name);
+  formData.append("email", email);
+  formData.append("phone", phone);
+  let data = await fetch(url, {
+    method: "PUT",
+    headers,
+    body: formData,
+  }).catch((error) => {
+    console.error("Error:", error);
+  });
+  let parsedData = await data
+    .json()
+    .catch(() => console.error("error in parsing"));
+  console.log(parsedData);
+  view_contacts_list();
+}
+
+async function delete_contact() {
+  let Id = document.getElementById("contact-id").value;
+  let url = "https://johnspyboy.freshdesk.com/api/v2/contacts/" + Id;
+  let data = await fetch(url, {
+    method: "DELETE",
+    headers,
+  }).catch((error) => {
+    console.error("Error:", error);
+  });
+
+  console.log("deleted");
+  view_contacts_list();
+}
+
+view_contacts_list();

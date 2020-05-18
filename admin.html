@@ -15,64 +15,145 @@
     <!-- bootstrap -->
   </head>
   <body>
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="update-contact"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="contact-update"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Update Contact</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="contact-id">ID</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="contact-id"
+                  readonly
+                />
+              </div>
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="update-name" />
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="update-email" />
+              </div>
+              <div class="form-group">
+                <label for="phone">Ph.no</label>
+                <input type="text" class="form-control" id="update-phone" />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-success"
+              onclick="update_contact()"
+              data-dismiss="modal"
+            >
+              Update
+            </button>
+            <p class="px-3">OR</p>
+            <button
+              type="button"
+              class="btn btn-danger"
+              onclick="delete_contact()"
+              data-dismiss="modal"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="container-fluid py-3 mx-3">
       <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
           <a
             class="nav-item nav-link active"
-            id="nav-home-tab"
+            id="nav-tickets-tab"
             data-toggle="tab"
-            href="#nav-home"
+            href="#nav-tickets"
             role="tab"
-            aria-controls="nav-home"
+            aria-controls="nav-tickets"
             aria-selected="true"
-            onclick="view_ticket_list()"
             >Tickets</a
           >
           <a
             class="nav-item nav-link"
-            id="nav-profile-tab"
+            id="nav-contacts-tab"
             data-toggle="tab"
-            href="#nav-profile"
+            href="#nav-contacts"
             role="tab"
-            aria-controls="nav-profile"
+            aria-controls="nav-contacts"
             aria-selected="false"
-            >Profile</a
+            >Contacts</a
           >
           <a
             class="nav-item nav-link"
-            id="nav-contact-tab"
+            id="nav-create-tab"
             data-toggle="tab"
-            href="#nav-contact"
+            href="#nav-create"
             role="tab"
-            aria-controls="nav-contact"
+            aria-controls="nav-create"
             aria-selected="false"
-            >Contact</a
+            >Create</a
           >
         </div>
       </nav>
       <div class="tab-content" id="nav-tabContent">
         <div
           class="tab-pane fade show active"
-          id="nav-home"
+          id="nav-tickets"
           role="tabpanel"
-          aria-labelledby="nav-home-tab"
+          aria-labelledby="nav-tickets-tab"
         >
           <div class="row" id="ticket-list"></div>
         </div>
         <div
           class="tab-pane fade"
-          id="nav-profile"
+          id="nav-contacts"
           role="tabpanel"
-          aria-labelledby="nav-profile-tab"
+          aria-labelledby="nav-contacts-tab"
         >
-          Something
+          <div class="row pl-3">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">#ID</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Ph.no</th>
+                  <th scope="col">Edit</th>
+                </tr>
+              </thead>
+              <tbody id="contacts-list"></tbody>
+            </table>
+          </div>
         </div>
         <div
           class="tab-pane fade"
-          id="nav-contact"
+          id="nav-create"
           role="tabpanel"
-          aria-labelledby="nav-contact-tab"
+          aria-labelledby="nav-create-tab"
         >
           Something
         </div>
