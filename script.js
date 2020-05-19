@@ -14,17 +14,17 @@ async function view_ticket_list() {
     headers,
   }).catch((error) => {
     alert("Request error  more details in console");
-    throw ("Error:", error);
+    console.error("Error:", error);
   });
 
   if (data.status != 200) {
     alert("Responce Error more details in console");
-    throw await data.json();
+    console.error(await data.json());
   }
 
   let parsedData = await data.json().catch(() => {
     alert("error in data");
-    throw "error in parsing";
+    console.error("error in parsing");
   });
   console.log(parsedData);
   let ticketList = document.getElementById("ticket-list");
@@ -91,7 +91,7 @@ function create_ticket_card(
         <div class="card card-body">
         <p>Details:</p>
         <p style="max-height:150px; overflow-y: scroll; ">"${description}"</p>
-        <form>
+        <div>
            
             <div class="form-group row">
             <label for="Priority${Id}"class="col col-form-label">Priority</label>
@@ -120,7 +120,7 @@ function create_ticket_card(
             <p>OR</p>
             <button type="btn" class="btn btn-danger ml-3" onclick="delete_ticket(${Id})">Delete</button>
             </div>
-        </form>
+        </div>
         </div>
     </div>
   </div>`;
@@ -133,7 +133,6 @@ async function update_ticket(ticketId, def_priority, def_status) {
   priority = priority ? priority : def_priority;
   let status = document.getElementById(`Status${ticketId}`).value;
   status = status ? status : def_status;
-
   let formData = new FormData();
   formData.append("priority", priority);
   formData.append("status", status);
@@ -143,17 +142,15 @@ async function update_ticket(ticketId, def_priority, def_status) {
     body: formData,
   }).catch((error) => {
     alert("Request error  more details in console");
-    throw ("Error:", error);
+    console.error("Error:", error);
   });
-
   if (data.status != 200) {
     alert("Responce Error more details in console");
-    throw await data.json();
+    console.error(await data.json());
   }
-
   let parsedData = await data.json().catch(() => {
     alert("error in data");
-    throw "error in parsing";
+    console.error("error in parsing");
   });
   console.log(parsedData);
   view_ticket_list();
@@ -166,19 +163,17 @@ async function delete_ticket(ticketId) {
     headers,
   }).catch((error) => {
     alert("Request error  more details in console");
-    throw ("Error:", error);
+    console.error("Error:", error);
   });
 
   if (data.status != 200) {
     alert("Responce Error more details in console");
-    throw await data.json();
+    console.error(await data.json());
   }
 
   console.log("deleted");
   view_ticket_list();
 }
-
-view_ticket_list();
 
 // contacts tab
 async function view_contacts_list() {
@@ -187,17 +182,17 @@ async function view_contacts_list() {
     method: "GET",
     headers,
   }).catch((error) => {
-    throw ("Error:", error);
+    console.error("Error:", error);
   });
 
   if (data.status != 200) {
     alert("Responce Error more details in console");
-    throw await data.json();
+    console.error(await data.json());
   }
 
   let parsedData = await data.json().catch(() => {
     alert("error in data");
-    throw "error in parsing";
+    console.error("error in parsing");
   });
   console.log(parsedData);
   let ticketList = document.getElementById("contacts-list");
@@ -254,17 +249,17 @@ async function update_contact() {
     headers,
     body: formData,
   }).catch((error) => {
-    throw ("Error:", error);
+    console.error("Error:", error);
   });
 
   if (data.status != 200) {
     alert("Responce Error more details in console");
-    throw await data.json();
+    console.error(await data.json());
   }
 
   let parsedData = await data.json().catch(() => {
     alert("error in data");
-    throw "error in parsing";
+    console.error("error in parsing");
   });
   console.log(parsedData);
   view_contacts_list();
@@ -277,12 +272,12 @@ async function delete_contact() {
     method: "DELETE",
     headers,
   }).catch((error) => {
-    throw ("Error:", error);
+    console.error("Error:", error);
   });
 
   if (data.status != 200) {
     alert("Responce Error more details in console");
-    throw await data.json();
+    console.error(await data.json());
   }
 
   console.log("deleted");
@@ -309,17 +304,17 @@ async function create_ticket() {
     headers,
     body: formData,
   }).catch((error) => {
-    throw ("Error:", error);
+    console.error("Error:", error);
   });
 
   if (data.status != 200) {
     alert("Responce Error more details in console");
-    throw await data.json();
+    console.error(await data.json());
   }
 
   let parsedData = await data.json().catch(() => {
     alert("error in data");
-    throw "error in parsing";
+    console.error("error in parsing");
   });
   alert("created");
   console.log(parsedData);
@@ -341,19 +336,21 @@ async function create_contact() {
     headers,
     body: formData,
   }).catch((error) => {
-    throw ("Error:", error);
+    console.error("Error:", error);
   });
 
   if (data.status != 200) {
     alert("Responce Error more details in console");
-    throw await data.json();
+    console.error(await data.json());
   }
 
   let parsedData = await data.json().catch(() => {
     alert("error in data");
-    throw "error in parsing";
+    console.error("error in parsing");
   });
   console.log(parsedData);
   alert("created");
   view_contacts_list();
 }
+
+view_ticket_list();
