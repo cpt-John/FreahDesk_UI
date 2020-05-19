@@ -13,12 +13,19 @@ async function view_ticket_list() {
     method: "GET",
     headers,
   }).catch((error) => {
-    console.error("Error:", error);
+    alert("Request error  more details in console");
+    throw ("Error:", error);
   });
 
-  let parsedData = await data
-    .json()
-    .catch(() => console.error("error in parsing"));
+  if (data.status != 200) {
+    alert("Responce Error more details in console");
+    throw await data.json();
+  }
+
+  let parsedData = await data.json().catch(() => {
+    alert("error in data");
+    throw "error in parsing";
+  });
   console.log(parsedData);
   let ticketList = document.getElementById("ticket-list");
   ticketList.innerHTML = "";
@@ -135,11 +142,19 @@ async function update_ticket(ticketId, def_priority, def_status) {
     headers,
     body: formData,
   }).catch((error) => {
-    console.error("Error:", error);
+    alert("Request error  more details in console");
+    throw ("Error:", error);
   });
-  let parsedData = await data
-    .json()
-    .catch(() => console.error("error in parsing"));
+
+  if (data.status != 200) {
+    alert("Responce Error more details in console");
+    throw await data.json();
+  }
+
+  let parsedData = await data.json().catch(() => {
+    alert("error in data");
+    throw "error in parsing";
+  });
   console.log(parsedData);
   view_ticket_list();
 }
@@ -150,8 +165,14 @@ async function delete_ticket(ticketId) {
     method: "DELETE",
     headers,
   }).catch((error) => {
-    console.error("Error:", error);
+    alert("Request error  more details in console");
+    throw ("Error:", error);
   });
+
+  if (data.status != 200) {
+    alert("Responce Error more details in console");
+    throw await data.json();
+  }
 
   console.log("deleted");
   view_ticket_list();
@@ -166,12 +187,18 @@ async function view_contacts_list() {
     method: "GET",
     headers,
   }).catch((error) => {
-    console.error("Error:", error);
+    throw ("Error:", error);
   });
 
-  let parsedData = await data
-    .json()
-    .catch(() => console.error("error in parsing"));
+  if (data.status != 200) {
+    alert("Responce Error more details in console");
+    throw await data.json();
+  }
+
+  let parsedData = await data.json().catch(() => {
+    alert("error in data");
+    throw "error in parsing";
+  });
   console.log(parsedData);
   let ticketList = document.getElementById("contacts-list");
   ticketList.innerHTML = "";
@@ -227,11 +254,18 @@ async function update_contact() {
     headers,
     body: formData,
   }).catch((error) => {
-    console.error("Error:", error);
+    throw ("Error:", error);
   });
-  let parsedData = await data
-    .json()
-    .catch(() => console.error("error in parsing"));
+
+  if (data.status != 200) {
+    alert("Responce Error more details in console");
+    throw await data.json();
+  }
+
+  let parsedData = await data.json().catch(() => {
+    alert("error in data");
+    throw "error in parsing";
+  });
   console.log(parsedData);
   view_contacts_list();
 }
@@ -243,8 +277,13 @@ async function delete_contact() {
     method: "DELETE",
     headers,
   }).catch((error) => {
-    console.error("Error:", error);
+    throw ("Error:", error);
   });
+
+  if (data.status != 200) {
+    alert("Responce Error more details in console");
+    throw await data.json();
+  }
 
   console.log("deleted");
   view_contacts_list();
@@ -270,11 +309,18 @@ async function create_ticket() {
     headers,
     body: formData,
   }).catch((error) => {
-    console.error("Error:", error);
+    throw ("Error:", error);
   });
-  let parsedData = await data
-    .json()
-    .catch(() => console.error("error in parsing"));
+
+  if (data.status != 200) {
+    alert("Responce Error more details in console");
+    throw await data.json();
+  }
+
+  let parsedData = await data.json().catch(() => {
+    alert("error in data");
+    throw "error in parsing";
+  });
   alert("created");
   console.log(parsedData);
   view_ticket_list();
@@ -295,11 +341,18 @@ async function create_contact() {
     headers,
     body: formData,
   }).catch((error) => {
-    console.error("Error:", error);
+    throw ("Error:", error);
   });
-  let parsedData = await data
-    .json()
-    .catch(() => console.error("error in parsing"));
+
+  if (data.status != 200) {
+    alert("Responce Error more details in console");
+    throw await data.json();
+  }
+
+  let parsedData = await data.json().catch(() => {
+    alert("error in data");
+    throw "error in parsing";
+  });
   console.log(parsedData);
   alert("created");
   view_contacts_list();
