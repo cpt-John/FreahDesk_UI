@@ -14,17 +14,17 @@ async function view_ticket_list() {
     headers,
   }).catch((error) => {
     alert("Request error  more details in console");
-    throw ("Error:", error);
+    console.error(("Error:", error));
   });
 
   if (data.status != 200) {
     alert("Responce Error more details in console");
-    throw await data.json();
+    console.error(await data.json());
   }
 
   let parsedData = await data.json().catch(() => {
     alert("error in data");
-    throw "error in parsing";
+    console.error("error in parsing");
   });
   console.log(parsedData);
   let ticketList = document.getElementById("ticket-list");
@@ -143,17 +143,17 @@ async function update_ticket(ticketId, def_priority, def_status) {
     body: formData,
   }).catch((error) => {
     alert("Request error  more details in console");
-    throw ("Error:", error);
+    console.error(("Error:", error));
   });
 
   if (data.status != 200) {
     alert("Responce Error more details in console");
-    throw await data.json();
+    console.error(await data.json());
   }
 
   let parsedData = await data.json().catch(() => {
     alert("error in data");
-    throw "error in parsing";
+    console.error("error in parsing");
   });
   console.log(parsedData);
   view_ticket_list();
@@ -166,12 +166,12 @@ async function delete_ticket(ticketId) {
     headers,
   }).catch((error) => {
     alert("Request error  more details in console");
-    throw ("Error:", error);
+    console.error(("Error:", error));
   });
 
   if (data.status != 200) {
     alert("Responce Error more details in console");
-    throw await data.json();
+    console.error(await data.json());
   }
 
   console.log("deleted");
@@ -187,17 +187,17 @@ async function view_contacts_list() {
     method: "GET",
     headers,
   }).catch((error) => {
-    throw ("Error:", error);
+    console.error(("Error:", error));
   });
 
   if (data.status != 200) {
     alert("Responce Error more details in console");
-    throw await data.json();
+    console.error(await data.json());
   }
 
   let parsedData = await data.json().catch(() => {
     alert("error in data");
-    throw "error in parsing";
+    console.error("error in parsing");
   });
   console.log(parsedData);
   let ticketList = document.getElementById("contacts-list");
@@ -254,17 +254,17 @@ async function update_contact() {
     headers,
     body: formData,
   }).catch((error) => {
-    throw ("Error:", error);
+    console.error(("Error:", error));
   });
 
   if (data.status != 200) {
     alert("Responce Error more details in console");
-    throw await data.json();
+    console.error(await data.json());
   }
 
   let parsedData = await data.json().catch(() => {
     alert("error in data");
-    throw "error in parsing";
+    console.error("error in parsing");
   });
   console.log(parsedData);
   view_contacts_list();
@@ -277,12 +277,12 @@ async function delete_contact() {
     method: "DELETE",
     headers,
   }).catch((error) => {
-    throw ("Error:", error);
+    console.error(("Error:", error));
   });
 
   if (data.status != 200) {
     alert("Responce Error more details in console");
-    throw await data.json();
+    console.error(await data.json());
   }
 
   console.log("deleted");
@@ -309,17 +309,17 @@ async function create_ticket() {
     headers,
     body: formData,
   }).catch((error) => {
-    throw ("Error:", error);
+    console.error(("Error:", error));
   });
 
   if (data.status != 200) {
     alert("Responce Error more details in console");
-    throw await data.json();
+    console.error(await data.json());
   }
 
   let parsedData = await data.json().catch(() => {
     alert("error in data");
-    throw "error in parsing";
+    console.error("error in parsing");
   });
   alert("created");
   console.log(parsedData);
@@ -341,17 +341,17 @@ async function create_contact() {
     headers,
     body: formData,
   }).catch((error) => {
-    throw ("Error:", error);
+    console.error(("Error:", error));
   });
 
   if (data.status != 200) {
     alert("Responce Error more details in console");
-    throw await data.json();
+    console.error(await data.json());
   }
 
   let parsedData = await data.json().catch(() => {
     alert("error in data");
-    throw "error in parsing";
+    console.error("error in parsing");
   });
   console.log(parsedData);
   alert("created");
