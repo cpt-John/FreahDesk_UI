@@ -316,7 +316,6 @@ async function create_ticket() {
     alert("error in data");
     console.error("error in parsing");
   });
-  alert("created");
   console.log(parsedData);
   view_ticket_list();
 }
@@ -349,7 +348,6 @@ async function create_contact() {
     console.error("error in parsing");
   });
   console.log(parsedData);
-  alert("created");
   view_contacts_list();
 }
 
