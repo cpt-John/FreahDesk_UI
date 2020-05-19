@@ -1,8 +1,15 @@
-const headers = { Authorization: "Basic " + btoa("5182N78dxnDwgjP1Jg") };
+let apiKey = "5182N78dxnDwgjP1Jg";
+let domainName = "johnspyboy";
+let base_url = `https://${domainName}.freshdesk.com/api/v2/`;
+
+let url = new URL(window.location.href);
+domainName = url.searchParams.get("dmain");
+apiKey = url.searchParams.get("apiKey");
+
+const headers = { Authorization: "Basic " + btoa(apiKey) };
 
 async function view_ticket_list() {
-  let url =
-    "https://johnspyboy.freshdesk.com/api/v2/tickets?include=description,requester&order_by=status";
+  let url = base_url + "tickets?include=description,requester&order_by=status";
   let data = await fetch(url, {
     method: "GET",
     headers,
@@ -115,7 +122,7 @@ function create_ticket_card(
 }
 
 async function update_ticket(ticketId, def_priority, def_status) {
-  let url = "https://johnspyboy.freshdesk.com/api/v2/tickets/" + ticketId;
+  let url = base_url + "tickets/" + ticketId;
   let priority = document.getElementById(`Priority${ticketId}`).value;
   priority = priority ? priority : def_priority;
   let status = document.getElementById(`Status${ticketId}`).value;
@@ -139,7 +146,7 @@ async function update_ticket(ticketId, def_priority, def_status) {
 }
 
 async function delete_ticket(ticketId) {
-  let url = "https://johnspyboy.freshdesk.com/api/v2/tickets/" + ticketId;
+  let url = base_url + "tickets/" + ticketId;
   let data = await fetch(url, {
     method: "DELETE",
     headers,
@@ -155,7 +162,7 @@ view_ticket_list();
 
 // contacts tab
 async function view_contacts_list() {
-  let url = "https://johnspyboy.freshdesk.com/api/v2/contacts";
+  let url = base_url + "contacts";
   let data = await fetch(url, {
     method: "GET",
     headers,
@@ -204,7 +211,7 @@ function fill_contact_details(Id) {
 
 async function update_contact() {
   let Id = document.getElementById("contact-id").value;
-  let url = "https://johnspyboy.freshdesk.com/api/v2/contacts/" + Id;
+  let url = base_url + "contacts/" + Id;
   let name = document.getElementById("update-name").value;
   name = name ? name : document.getElementById("name" + Id).innerText;
   let email = document.getElementById("update-email").value;
@@ -232,7 +239,7 @@ async function update_contact() {
 
 async function delete_contact() {
   let Id = document.getElementById("contact-id").value;
-  let url = "https://johnspyboy.freshdesk.com/api/v2/contacts/" + Id;
+  let url = base_url + "contacts/" + Id;
   let data = await fetch(url, {
     method: "DELETE",
     headers,
@@ -247,7 +254,7 @@ async function delete_contact() {
 view_contacts_list();
 
 async function create_ticket() {
-  let url = "https://johnspyboy.freshdesk.com/api/v2/tickets/";
+  let url = base_url + "tickets/";
   let formData = new FormData();
   let email = document.getElementById("email-create-ticket").value;
   let subject = document.getElementById("subject-create").value;
@@ -275,7 +282,7 @@ async function create_ticket() {
 }
 
 async function create_contact() {
-  let url = "https://johnspyboy.freshdesk.com/api/v2/contacts/";
+  let url = base_url + "contacts/";
   let formData = new FormData();
   let email = document.getElementById("email-create-contact").value;
   let name = document.getElementById("name-create").value;

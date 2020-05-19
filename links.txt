@@ -1,3 +1,3 @@
-https://xenodochial-newton-7f6ecd.netlify.app/admin.html
+https://xenodochial-newton-7f6ecd.netlify.app/login.html
 
 https://github.com/cpt-John/FreahDesk_UI
