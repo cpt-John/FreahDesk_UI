@@ -2,8 +2,8 @@
 // let domainName = "johnspyboy";
 
 let url = new URL(window.location.href);
-domainName = url.searchParams.get("domain");
-apiKey = url.searchParams.get("apiKey");
+const domainName = url.searchParams.get("domain");
+const apiKey = url.searchParams.get("apiKey");
 let base_url = `https://${domainName}.freshdesk.com/api/v2/`;
 const headers = { Authorization: "Basic " + btoa(apiKey) };
 
