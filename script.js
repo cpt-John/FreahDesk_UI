@@ -1,11 +1,10 @@
-let apiKey = "5182N78dxnDwgjP1Jg";
-let domainName = "johnspyboy";
-let base_url = `https://${domainName}.freshdesk.com/api/v2/`;
+// let apiKey = "5182N78dxnDwgjP1Jg";
+// let domainName = "johnspyboy";
 
 let url = new URL(window.location.href);
 domainName = url.searchParams.get("dmain");
 apiKey = url.searchParams.get("apiKey");
-
+let base_url = `https://${domainName}.freshdesk.com/api/v2/`;
 const headers = { Authorization: "Basic " + btoa(apiKey) };
 
 async function view_ticket_list() {
