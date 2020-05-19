@@ -155,7 +155,7 @@
           role="tabpanel"
           aria-labelledby="nav-create-tab"
         >
-          <form class="mx-5" onsubmit="create_ticket()">
+          <form class="mx-5">
             <h1>Create Ticket</h1>
             <div class="form-group">
               <label for="email-create-ticket">Email Id</label>
@@ -209,10 +209,16 @@
                 required
               ></textarea>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              onclick="create_ticket()"
+            >
+              Submit
+            </button>
           </form>
           <br />
-          <form class="mx-5" onsubmit="create_contact()">
+          <form class="mx-5">
             <h1>Create New Contact</h1>
             <div class="form-group">
               <label for="name-create">Name</label>
@@ -243,7 +249,13 @@
                 aria-describedby="emailHelp"
               />
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              onclick="create_contact()"
+            >
+              Submit
+            </button>
           </form>
         </div>
       </div>
