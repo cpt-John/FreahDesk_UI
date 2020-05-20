@@ -194,10 +194,10 @@ async function view_contacts_list() {
     return;
   });
   console.log(parsedData);
-  let ticketList = document.getElementById("contacts-list");
-  ticketList.innerHTML = "";
+  let contactList = document.getElementById("contacts-list");
+  contactList.innerHTML = "";
   parsedData.forEach((e) => {
-    ticketList.appendChild(
+    contactList.appendChild(
       create_contact_card(e["id"], e["name"], e["email"], e["phone"])
     );
   });
@@ -267,7 +267,7 @@ async function update_contact() {
 
 async function delete_contact() {
   let Id = document.getElementById("contact-id").value;
-  let url = base_url + "contacts/" + Id;
+  let url = base_url + "contacts/" + Id + "/hard_delete?force=true";
   let data = await fetch(url, {
     method: "DELETE",
     headers,
@@ -306,6 +306,8 @@ async function create_ticket() {
   if (data.status != 201) {
     alert("Responce Error more details in console");
     console.error(await data.json());
+  } else {
+    alert("Ticket Created");
   }
 
   let parsedData = await data.json().catch(() => {
@@ -338,6 +340,8 @@ async function create_contact() {
   if (data.status != 201) {
     alert("Responce Error more details in console");
     console.error(await data.json());
+  } else {
+    alert("contact Created");
   }
 
   let parsedData = await data.json().catch(() => {
