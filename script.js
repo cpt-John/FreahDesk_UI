@@ -25,6 +25,7 @@ async function view_ticket_list() {
   let parsedData = await data.json().catch(() => {
     alert("error in data");
     console.error("error in parsing");
+    return;
   });
   console.log(parsedData);
   let ticketList = document.getElementById("ticket-list");
@@ -151,6 +152,7 @@ async function update_ticket(ticketId, def_priority, def_status) {
   let parsedData = await data.json().catch(() => {
     alert("error in data");
     console.error("error in parsing");
+    return;
   });
   console.log(parsedData);
   view_ticket_list();
@@ -189,6 +191,7 @@ async function view_contacts_list() {
   let parsedData = await data.json().catch(() => {
     alert("error in data");
     console.error("error in parsing");
+    return;
   });
   console.log(parsedData);
   let ticketList = document.getElementById("contacts-list");
@@ -256,6 +259,7 @@ async function update_contact() {
   let parsedData = await data.json().catch(() => {
     alert("error in data");
     console.error("error in parsing");
+    return;
   });
   console.log(parsedData);
   view_contacts_list();
