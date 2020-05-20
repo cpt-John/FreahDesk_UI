@@ -164,12 +164,8 @@ async function delete_ticket(ticketId) {
   }).catch((error) => {
     alert("Request error  more details in console");
     console.error("Error:", error);
+    return;
   });
-
-  if (data.status != 200) {
-    alert("Responce Error more details in console");
-    console.error(await data.json());
-  }
 
   console.log("deleted");
   view_ticket_list();
@@ -273,12 +269,8 @@ async function delete_contact() {
     headers,
   }).catch((error) => {
     console.error("Error:", error);
+    return;
   });
-
-  if (data.status != 200) {
-    alert("Responce Error more details in console");
-    console.error(await data.json());
-  }
 
   console.log("deleted");
   view_contacts_list();
@@ -307,7 +299,7 @@ async function create_ticket() {
     console.error("Error:", error);
   });
 
-  if (data.status != 200) {
+  if (data.status != 201) {
     alert("Responce Error more details in console");
     console.error(await data.json());
   }
@@ -315,6 +307,7 @@ async function create_ticket() {
   let parsedData = await data.json().catch(() => {
     alert("error in data");
     console.error("error in parsing");
+    return;
   });
   console.log(parsedData);
   view_ticket_list();
@@ -337,8 +330,8 @@ async function create_contact() {
   }).catch((error) => {
     console.error("Error:", error);
   });
-
-  if (data.status != 200) {
+  console.log(data.status);
+  if (data.status != 201) {
     alert("Responce Error more details in console");
     console.error(await data.json());
   }
@@ -346,6 +339,7 @@ async function create_contact() {
   let parsedData = await data.json().catch(() => {
     alert("error in data");
     console.error("error in parsing");
+    return;
   });
   console.log(parsedData);
   view_contacts_list();
