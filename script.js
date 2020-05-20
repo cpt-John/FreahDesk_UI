@@ -317,6 +317,7 @@ async function create_ticket() {
   });
   console.log(parsedData);
   view_ticket_list();
+  view_contacts_list();
 }
 
 async function create_contact() {
