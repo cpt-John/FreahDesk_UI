@@ -19,6 +19,6 @@ async function login() {
     alert("invalid credentials");
     console.log(await data.json());
   } else {
-    window.location.href = location.href = `./admin.html?domain=${domain}&apiKey=${apikey}`;
+    window.location.href = `./admin.html?domain=${domain}&apiKey=${apikey}`;
   }
 }

@@ -15,6 +15,9 @@
     <!-- bootstrap -->
   </head>
   <body class="">
+    <!-- alert -->
+    <div id="alert"></div>
+    <!-- alert -->
     <!-- Modal -->
     <div
       class="modal fade"
@@ -60,13 +63,28 @@
                 <label for="phone">Ph.no</label>
                 <input type="text" class="form-control" id="update-phone" />
               </div>
+              <div class="form-group">
+                <label for="update-fb">Twitter Id:</label>
+                <input type="text" class="form-control" id="update-twitter" />
+              </div>
+              <div class="form-group">
+                <label for="update-address">Address</label>
+                <textarea
+                  type="text"
+                  class="form-control"
+                  id="update-address"
+                  row="3"
+                ></textarea>
+              </div>
             </div>
           </div>
           <div class="modal-footer">
             <button
+              id="update-btn"
               type="button"
               class="btn btn-success"
-              onclick="update_contact()"
+              contactId=""
+              onclick="update_contact(this)"
               data-dismiss="modal"
             >
               Update
@@ -226,7 +244,6 @@
                 type="text"
                 class="form-control"
                 id="name-create"
-                aria-describedby="emailHelp"
                 required
               />
             </div>
@@ -242,12 +259,20 @@
             </div>
             <div class="form-group">
               <label for="phone-create">Phone Number</label>
-              <input
+              <input type="text" class="form-control" id="phone-create" />
+            </div>
+            <div class="form-group">
+              <label for="twitter-create">Twitter Id:</label>
+              <input type="text" class="form-control" id="twitter-create" />
+            </div>
+            <div class="form-group">
+              <label for="address-create">Address</label>
+              <textarea
                 type="text"
                 class="form-control"
-                id="phone-create"
-                aria-describedby="emailHelp"
-              />
+                id="address-create"
+                row="3"
+              ></textarea>
             </div>
             <button
               type="button"

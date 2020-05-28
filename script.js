@@ -7,28 +7,34 @@ const apiKey = url.searchParams.get("apiKey");
 let base_url = `https://${domainName}.freshdesk.com/api/v2/`;
 const headers = { Authorization: "Basic " + btoa(apiKey) };
 
+let contacts = [];
+let tickets = [];
+
 async function view_ticket_list() {
+  let conn_status = true;
   let url = base_url + "tickets?include=description,requester&order_by=status";
   let data = await fetch(url, {
     method: "GET",
     headers,
   }).catch((error) => {
-    alert("Request error  more details in console");
+    custom_alert("danger", "ERROR: Cannot connect to server");
     console.error("Error:", error);
+    conn_status = false;
   });
 
+  if (!conn_status) return;
   if (data.status != 200) {
-    alert("Responce Error more details in console");
-    console.error(await data.json());
+    let error = await data.json();
+    custom_alert("danger", "ERROR:" + error["errors"][0]["message"]);
+    console.error(error);
+    return;
   }
 
-  let parsedData = await data.json().catch(() => {
-    alert("error in data");
-    console.error("error in parsing");
-    return;
-  });
+  let parsedData = await data.json();
+
   console.log(parsedData);
   let ticketList = document.getElementById("ticket-list");
+  tickets = parsedData;
   ticketList.innerHTML = "";
   parsedData.forEach((e) => {
     ticketList.appendChild(
@@ -128,73 +134,82 @@ function create_ticket_card(
   return card;
 }
 
-async function update_ticket(ticketId, def_priority, def_status) {
+async function update_ticket(ticketId) {
+  let conn_status = true;
   let url = base_url + "tickets/" + ticketId;
-  let priority = document.getElementById(`Priority${ticketId}`).value;
-  priority = priority ? priority : def_priority;
-  let status = document.getElementById(`Status${ticketId}`).value;
-  status = status ? status : def_status;
+  let ticket = tickets.find((t) => t["id"] == ticketId);
   let formData = new FormData();
-  formData.append("priority", priority);
-  formData.append("status", status);
+  let priority = document.getElementById(`Priority${ticketId}`).value;
+  if (priority) formData.append("priority", priority);
+  let status = document.getElementById(`Status${ticketId}`).value;
+  if (status) formData.append("status", status);
+
   let data = await fetch(url, {
     method: "PUT",
     headers,
     body: formData,
   }).catch((error) => {
-    alert("Request error  more details in console");
+    custom_alert("danger", "ERROR: Cannot connect to server");
     console.error("Error:", error);
+    conn_status = false;
   });
+  if (!conn_status) return;
   if (data.status != 200) {
-    alert("Responce Error more details in console");
-    console.error(await data.json());
-  }
-  let parsedData = await data.json().catch(() => {
-    alert("error in data");
-    console.error("error in parsing");
+    let error = await data.json();
+    custom_alert("danger", "ERROR:" + error["errors"][0]["message"]);
+    console.error(error);
     return;
-  });
+  }
+  let parsedData = await data.json();
   console.log(parsedData);
   view_ticket_list();
 }
 
 async function delete_ticket(ticketId) {
+  let conn_status = true;
   let url = base_url + "tickets/" + ticketId;
-  let data = await fetch(url, {
+  await fetch(url, {
     method: "DELETE",
     headers,
   }).catch((error) => {
-    alert("Request error  more details in console");
+    custom_alert("danger", "ERROR: Cannot connect to server");
     console.error("Error:", error);
-    return;
+    conn_status = false;
   });
-
-  console.log("deleted");
+  if (!conn_status) return;
+  custom_alert("warning", "deleted!");
+  console.log("ticket deleted");
   view_ticket_list();
 }
 
 // contacts tab
 async function view_contacts_list() {
+  let conn_status = true;
   let url = base_url + "contacts";
   let data = await fetch(url, {
     method: "GET",
     headers,
   }).catch((error) => {
+    custom_alert("danger", "ERROR: Cannot connect to server");
     console.error("Error:", error);
+    conn_status = false;
   });
-
+  if (!conn_status) return;
   if (data.status != 200) {
-    alert("Responce Error more details in console");
-    console.error(await data.json());
+    let error = await data.json();
+    custom_alert("danger", "ERROR:" + error["errors"][0]["message"]);
+    console.error(error);
+    return;
   }
 
-  let parsedData = await data.json().catch(() => {
-    alert("error in data");
-    console.error("error in parsing");
-    return;
-  });
+  let parsedData = await data.json();
+
   console.log(parsedData);
+
+  contacts = parsedData;
+
   let contactList = document.getElementById("contacts-list");
+
   contactList.innerHTML = "";
   parsedData.forEach((e) => {
     contactList.appendChild(
@@ -217,55 +232,61 @@ function create_contact_card(id, name, email, phone) {
 }
 
 function fill_contact_details(Id) {
-  document.getElementById("contact-id").value = Id;
-  document.getElementById("update-name").value = document.getElementById(
-    "name" + Id
-  ).innerText;
-  document.getElementById("update-email").value = document.getElementById(
-    "email" + Id
-  ).innerText;
-  document.getElementById("update-phone").value = document.getElementById(
-    "phone" + Id
-  ).innerText;
+  document.getElementById("update-btn").setAttribute("contactId", Id);
+  let contact = contacts.find((c) => c["id"] == Id);
+  document.getElementById("contact-id").value = contact["id"];
+  document.getElementById("update-name").value = contact["name"];
+  document.getElementById("update-email").value = contact["email"];
+  document.getElementById("update-phone").value = contact["phone"];
+  document.getElementById("update-twitter").value = contact["twitter_id"];
+  document.getElementById("update-address").value = contact["address"];
 }
 
-async function update_contact() {
-  let Id = document.getElementById("contact-id").value;
-  let url = base_url + "contacts/" + Id;
-  let name = document.getElementById("update-name").value;
-  name = name ? name : document.getElementById("name" + Id).innerText;
-  let email = document.getElementById("update-email").value;
-  email = email ? email : document.getElementById("email" + Id).innerText;
-  let phone = document.getElementById("update-phone").value;
-  phone = phone ? phone : document.getElementById("phone" + Id).innerText;
+async function update_contact(item) {
+  let conn_status = true;
 
+  contactId = item.getAttribute("contactId");
+  let contact = contacts.find((c) => c["id"] == contactId);
   let formData = new FormData();
-  formData.append("name", name);
-  formData.append("email", email);
-  formData.append("phone", phone);
+  let url = base_url + "contacts/" + contactId;
+  let name = document.getElementById("update-name").value;
+  if (name != contact["name"] && name) formData.append("name", name);
+  let email = document.getElementById("update-email").value;
+  if (email != contact["email"] && email) formData.append("email", email);
+  let phone = document.getElementById("update-phone").value;
+  if (phone != contact["phone"] && phone) formData.append("phone", phone);
+  let twitter = document.getElementById("update-twitter").value;
+  if (twitter != contact["twitter_id"] && twitter)
+    formData.append("twitter_id", twitter);
+  let address = document.getElementById("update-address").value;
+  if (address != contact["address"] && address)
+    formData.append("address", address);
+
   let data = await fetch(url, {
     method: "PUT",
     headers,
     body: formData,
   }).catch((error) => {
     console.error("Error:", error);
+    custom_alert("danger", "ERROR: Cannot connect to server");
+    conn_status = false;
   });
-
+  if (!conn_status) return;
   if (data.status != 200) {
-    alert("Responce Error more details in console");
-    console.error(await data.json());
+    let error = await data.json();
+    custom_alert("danger", "ERROR:" + error["errors"][0]["message"]);
+    console.error(error);
+    return;
   }
 
-  let parsedData = await data.json().catch(() => {
-    alert("error in data");
-    console.error("error in parsing");
-    return;
-  });
+  let parsedData = await data.json();
+  custom_alert("success", "Upadted Contact!");
   console.log(parsedData);
   view_contacts_list();
 }
 
 async function delete_contact() {
+  let conn_status = true;
   let Id = document.getElementById("contact-id").value;
   let url = base_url + "contacts/" + Id + "/hard_delete?force=true";
   let data = await fetch(url, {
@@ -273,16 +294,20 @@ async function delete_contact() {
     headers,
   }).catch((error) => {
     console.error("Error:", error);
-    return;
+    custom_alert("danger", "ERROR: Cannot connect to server");
+    conn_status = false;
   });
 
-  console.log("deleted");
+  if (!conn_status) return;
+  custom_alert("warning", "deleted!");
+  console.log("constact deleted");
   view_contacts_list();
 }
 
 view_contacts_list();
 
 async function create_ticket() {
+  let conn_status = true;
   let url = base_url + "tickets/";
   let formData = new FormData();
   let email = document.getElementById("email-create-ticket").value;
@@ -301,57 +326,73 @@ async function create_ticket() {
     body: formData,
   }).catch((error) => {
     console.error("Error:", error);
+    custom_alert("danger", "ERROR: Cannot connect to server");
+    conn_status = false;
   });
+
+  if (!conn_status) return;
 
   if (data.status != 201) {
-    alert("Responce Error more details in console");
-    console.error(await data.json());
-  } else {
-    alert("Ticket Created");
+    let error = await data.json();
+    custom_alert("danger", "ERROR:" + error["errors"][0]["message"]);
+    console.error(error);
+    return;
   }
 
-  let parsedData = await data.json().catch(() => {
-    alert("error in data");
-    console.error("error in parsing");
-    return;
-  });
+  let parsedData = await data.json();
+  custom_alert("success", "ticket created!");
   console.log(parsedData);
   view_ticket_list();
   view_contacts_list();
 }
 
 async function create_contact() {
+  let conn_status = true;
   let url = base_url + "contacts/";
   let formData = new FormData();
   let email = document.getElementById("email-create-contact").value;
   let name = document.getElementById("name-create").value;
   let phone = document.getElementById("phone-create").value;
+  let twitter = document.getElementById("twitter-create").value;
+  let address = document.getElementById("address-create").value;
   phone = phone ? phone : "---";
   formData.append("email", email);
   formData.append("name", name);
   formData.append("phone", phone);
+  formData.append("twitter_id", twitter);
+  formData.append("address", address);
   let data = await fetch(url, {
     method: "POST",
     headers,
     body: formData,
   }).catch((error) => {
     console.error("Error:", error);
+    custom_alert("danger", "ERROR: Cannot connect to server");
+    conn_status = false;
   });
-  console.log(data.status);
+  if (!conn_status) return;
   if (data.status != 201) {
-    alert("Responce Error more details in console");
-    console.error(await data.json());
-  } else {
-    alert("contact Created");
+    let error = await data.json();
+    custom_alert("danger", "ERROR:" + error["errors"][0]["message"]);
+    console.error(error);
+    return;
   }
 
-  let parsedData = await data.json().catch(() => {
-    alert("error in data");
-    console.error("error in parsing");
-    return;
-  });
+  let parsedData = await data.json();
   console.log(parsedData);
+  custom_alert("success", "contact created!");
   view_contacts_list();
 }
 
 view_ticket_list();
+
+function custom_alert(type, message) {
+  let newAlert = $("#alert");
+  newAlert.html(`
+  <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+  <strong>${message}</strong></br>check console for more
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  </div>`);
+}
