@@ -395,4 +395,10 @@ function custom_alert(type, message) {
     <span aria-hidden="true">&times;</span>
   </button>
   </div>`);
+  $("html, body").animate(
+    {
+      scrollTop: $("#alert").offset().top,
+    },
+    500
+  );
 }
