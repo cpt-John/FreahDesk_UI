@@ -2,13 +2,14 @@
 // let domainName = "johnspyboy";
 
 let url = new URL(window.location.href);
-const domainName = url.searchParams.get("domain");
-const apiKey = url.searchParams.get("apiKey");
+const domainName = window.localStorage.getItem("domain");
+const apiKey = window.localStorage.getItem("api_key");
 let base_url = `https://${domainName}.freshdesk.com/api/v2/`;
 const headers = { Authorization: "Basic " + btoa(apiKey) };
 
 let contacts = [];
 let tickets = [];
+login();
 
 async function view_ticket_list() {
   let conn_status = true;
@@ -304,8 +305,6 @@ async function delete_contact() {
   view_contacts_list();
 }
 
-view_contacts_list();
-
 async function create_ticket() {
   let conn_status = true;
   let url = base_url + "tickets/";
@@ -384,7 +383,24 @@ async function create_contact() {
   view_contacts_list();
 }
 
-view_ticket_list();
+function login() {
+  if (!(apiKey || domainName)) {
+    custom_alert("warning", "not logged in!");
+    setTimeout(() => {
+      window.location.href = "./login.html";
+    }, 2000);
+  } else {
+    custom_alert("success", "logged in!");
+    view_ticket_list();
+    view_contacts_list();
+  }
+}
+function logOut() {
+  window.localStorage.removeItem("domain");
+  window.localStorage.removeItem("api_key");
+  custom_alert("warning", "logged out!");
+  setTimeout(() => (window.location.href = "./login.html"), 2000);
+}
 
 function custom_alert(type, message) {
   let newAlert = $("#alert");
@@ -401,6 +417,9 @@ function custom_alert(type, message) {
     },
     500
   );
+  setTimeout(() => {
+    newAlert.html("");
+  }, 3000);
 }
 function suggestContacts() {
   $("#suggestion-list").empty();

@@ -16,9 +16,24 @@ async function login() {
   });
 
   if (data.status != 200) {
-    alert("invalid credentials");
+    custom_alert("danger", "invalid credentials!");
     console.log(await data.json());
   } else {
-    window.location.href = `./admin.html?domain=${domain}&apiKey=${apikey}`;
+    window.localStorage.setItem("domain", domain);
+    window.localStorage.setItem("api_key", apikey);
+    window.location.href = `./admin.html`;
   }
+}
+function custom_alert(type, message) {
+  let newAlert = $("#alert");
+  newAlert.html(`
+  <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+  <strong>${message}</strong></br>check console for more
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  </div>`);
+  setTimeout(() => {
+    newAlert.html("");
+  }, 3000);
 }

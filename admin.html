@@ -104,7 +104,7 @@
     </div>
     <div class="container-fluid py-3 mx-3">
       <nav>
-        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <div class="nav nav-tabs d-flex" id="nav-tab" role="tablist">
           <a
             class="nav-item nav-link active"
             id="nav-tickets-tab"
@@ -135,6 +135,11 @@
             aria-selected="false"
             >Create</a
           >
+          <div class="ml-auto mr-5">
+            <button class="btn btn-primary" type="button" onclick="logOut()">
+              LogOut
+            </button>
+          </div>
         </div>
       </nav>
       <div class="tab-content" id="nav-tabContent">
