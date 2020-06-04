@@ -175,16 +175,23 @@
         >
           <div class="mx-5">
             <h1>Create Ticket</h1>
-            <div class="form-group">
+            <div class="form-group mb-1">
               <label for="email-create-ticket">Email Id</label>
               <input
                 type="email"
                 class="form-control"
                 id="email-create-ticket"
                 aria-describedby="emailHelp"
+                oninput="suggestContacts()"
+                list="suggestion-list"
+                autocomplete="off"
                 required
-              />
+              /><datalist id="suggestion-list"> </datalist>
             </div>
+            OR
+            <button class="btn btn-primary" onclick="scrollToCreateContact()">
+              Create New</button
+            ><br /><br />
             <div class="form-group">
               <label for="subject-create">Subject</label>
               <input
