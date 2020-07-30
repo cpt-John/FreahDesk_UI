@@ -19,36 +19,41 @@
     <div id="alert"></div>
     <!-- alert -->
     <div class="container">
-       <div class="row">
+      <div class="row">
         <div class="col text-center">
-          <p class="h1 shadow mb-5 p-3 rounded text-center bg-light text-success">
+          <p
+            class="h1 shadow mb-5 p-3 rounded text-center bg-light text-success"
+          >
             Fresh Desk Api
           </p>
         </div>
-         <div class="row">
-      <form class="my-5">
-        <h1>LoginForm</h1>
-        <div class="form-group">
-          <label for="doamin">Domain Name</label>
-          <input
-            type="text"
-            class="form-control"
-            id="domain"
-            placeholder="domain-name.freshdesk.com"
-            required
-          />
-          <small>Ex: johnspyboy</small>
+      </div>
+      <div class="row">
+        <div class="col text-center">
+          <form class="my-5">
+            <h1>LoginForm</h1>
+            <div class="form-group">
+              <label for="doamin">Domain Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="domain"
+                placeholder="domain-name.freshdesk.com"
+                required
+              />
+              <small>Ex: johnspyboy</small>
+            </div>
+            <div class="form-group">
+              <label for="apikey">ApiKey</label>
+              <input type="text" class="form-control" id="apikey" required />
+              <small>Ex: 5182N78dxnDwgjP1Jg</small>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="login()">
+              Login
+            </button>
+          </form>
         </div>
-        <div class="form-group">
-          <label for="apikey">ApiKey</label>
-          <input type="text" class="form-control" id="apikey" required />
-          <small>Ex: 5182N78dxnDwgjP1Jg</small>
-        </div>
-        <button type="button" class="btn btn-primary" onclick="login()">
-          Login
-        </button>
-      </form>
-           </div>
+      </div>
     </div>
   </body>
   <script src="login.js"></script>
